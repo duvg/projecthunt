@@ -1,12 +1,14 @@
 import Head from 'next/head'
 import Layout from '../components/layouts/Layout';
 
-export default function Home() {
+const Populares = () => {
   return (
     <div >
       <Layout>
-      <h1>Inicio</h1>
+      <h1>Populares</h1>
       </Layout>
     </div>
   )
 }
+
+export default Populares;
