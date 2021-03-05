@@ -35,7 +35,6 @@ const Producto = (props) => {
     //State del componente
     const [producto, setProducto] = useState({});
     const [error, setError] = useState(false);
-    const [cargando, setCargando] = useState(true);
     const [comentario, setComentario] = useState({});
     const [consultarDB, setConsultarDB] = useState(true);
 
@@ -145,10 +144,35 @@ const Producto = (props) => {
         setConsultarDB(true);
     }
 
-     // Carga del producto
-     console.log('error',error);
-     console.log('cargando',cargando);
-    
+    // Rvisar que el creador sea el mismo usuario autenticado
+    const puedeBorrar = () => {
+        if( ! usuario ) return false;
+
+        if( creador.id === usuario.uid ) {
+            return true;
+        }
+    }
+
+
+    // Eliminar producto de la BD
+    const eliminarProducto = async () => {
+
+        if ( ! usuario ) {
+            router.push("/login");
+        }
+
+        if( creador.id !== usuario.uid ) {
+            router.push("/");
+        }
+
+        try {
+            await firebase.db.collection('productos').doc(id).delete();  
+            router.push('/');  
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         
@@ -256,6 +280,11 @@ const Producto = (props) => {
                                         
                                     </aside>
                                 </ContenedorProducto>
+                                { puedeBorrar() &&
+                                    <Boton
+                                        onClick={eliminarProducto}
+                                    >Eliminar Producto</Boton>
+                                }
                             </Fragment>
                         )}
                     </div>
