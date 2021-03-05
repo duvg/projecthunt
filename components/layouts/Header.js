@@ -77,7 +77,7 @@ const Header = () => {
                             bgColor="true"
                             onClick={() => firebase.cerrarSesion() }
                         >
-                            Cerar Sesión
+                            Cerrar Sesión
                         </Boton>
                     </Fragment>
                 ) : (
